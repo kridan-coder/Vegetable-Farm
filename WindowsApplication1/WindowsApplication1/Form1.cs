@@ -11,7 +11,8 @@ namespace WindowsApplication1
     public partial class Form1 : Form
     {
         Dictionary<CheckBox, Cell> field = new Dictionary<CheckBox, Cell>();
-
+        int timeSpent = 0;
+        int money = 100;
         public Form1()
         {
             InitializeComponent();
@@ -30,16 +31,48 @@ namespace WindowsApplication1
         {
             foreach (CheckBox cb in panel1.Controls)
                 NextStep(cb);
+            updateTimeLabel(timeSpent++);
+        }
+
+        private void updateTimeLabel(int tick)
+        {
+            labelTimeSpent.Text = $"Time Spent: {tick}";
         }
 
         private void Plant(CheckBox cb)
         {
-            field[cb].Plant();
-            UpdateBox(cb);
+            if (isMoneyEnough(Actions.Plant))
+            {
+                field[cb].Plant();
+                UpdateBox(cb);
+                UpdateMoney(Actions.Plant);
+            }
         }
 
         private void Harvest(CheckBox cb)
         {
+            switch(field[cb].state)
+            {
+                case CellState.Planted:
+                    UpdateMoney(Actions.GetPlanted);
+                    break;
+
+                case CellState.Green:
+                    UpdateMoney(Actions.GetGreen);
+                    break;
+
+                case CellState.Immature:
+                    UpdateMoney(Actions.GetImmature);
+                    break;
+
+                case CellState.Mature:
+                    UpdateMoney(Actions.GetMature);
+                    break;
+
+                case CellState.Overgrow:
+                    UpdateMoney(Actions.GetOvermature);
+                    break;
+            }
             field[cb].Harvest();
             UpdateBox(cb);
         }
@@ -68,7 +101,74 @@ namespace WindowsApplication1
             }
             cb.BackColor = c;
         }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            timer1.Interval = trackBar1.Value * 20;
+            labelCurrentInterval.Text = $"Current Interval: {timer1.Interval}";
+        }
+
+        private void buttonRestart_Click(object sender, EventArgs e)
+        {
+            money = 100;
+            timeSpent = 0;
+            clearAllCells();
+            updateTimeLabel(timeSpent);
+            updateMoneyLabel(money);
+        }
+
+        private void clearAllCells()
+        {
+            foreach (Cell cell in field.Values)
+                cell.Harvest();
+        }
+        private void UpdateMoney(Actions action)
+        {
+            switch(action)
+            {
+                case Actions.Plant:
+                    money -= 2;
+                    break;
+                case Actions.GetPlanted:
+                    money -= 5;
+                    break;
+                case Actions.GetGreen:
+                    money += 0;
+                    break;
+                case Actions.GetImmature:
+                    money += 3;
+                    break;
+                case Actions.GetMature:
+                    money += 5;
+                    break;
+                case Actions.GetOvermature:
+                    money -= 1;
+                    break;
+            }
+            updateMoneyLabel(money);
+        }
+
+        private void updateMoneyLabel(int money)
+        {
+            labelMoneyAvailable.Text = $"Money Available: {money}";
+        }
+
+        private bool isMoneyEnough(Actions action)
+        {
+            switch (action)
+            {
+                case Actions.Plant:
+                    return money >= 2;
+                case Actions.GetPlanted:
+                    return money >= 5;
+                case Actions.GetOvermature:
+                    return money >= 1;
+            }
+            return true;
+        }
     }
+
+
 
     enum CellState
     {
@@ -78,6 +178,16 @@ namespace WindowsApplication1
         Immature,
         Mature,
         Overgrow
+    }
+
+    enum Actions
+    {
+        Plant,
+        GetPlanted,
+        GetGreen,
+        GetImmature,
+        GetMature,
+        GetOvermature
     }
 
     class Cell

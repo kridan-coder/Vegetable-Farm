@@ -47,7 +47,13 @@ namespace WindowsApplication1
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.labelTimeSpent = new System.Windows.Forms.Label();
+            this.labelMoneyAvailable = new System.Windows.Forms.Label();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.labelCurrentInterval = new System.Windows.Forms.Label();
+            this.buttonRestart = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -231,24 +237,82 @@ namespace WindowsApplication1
             this.checkBox1.Size = new System.Drawing.Size(141, 129);
             this.checkBox1.TabIndex = 4;
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.Click += new System.EventHandler(this.checkBox1_CheckedChanged);
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.checkBox1.Click += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // timer1
             // 
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // labelTimeSpent
+            // 
+            this.labelTimeSpent.AutoSize = true;
+            this.labelTimeSpent.Location = new System.Drawing.Point(631, 47);
+            this.labelTimeSpent.Name = "labelTimeSpent";
+            this.labelTimeSpent.Size = new System.Drawing.Size(73, 13);
+            this.labelTimeSpent.TabIndex = 1;
+            this.labelTimeSpent.Text = "Time Spent: 0";
+            // 
+            // labelMoneyAvailable
+            // 
+            this.labelMoneyAvailable.AutoSize = true;
+            this.labelMoneyAvailable.Location = new System.Drawing.Point(631, 25);
+            this.labelMoneyAvailable.Name = "labelMoneyAvailable";
+            this.labelMoneyAvailable.Size = new System.Drawing.Size(109, 13);
+            this.labelMoneyAvailable.TabIndex = 2;
+            this.labelMoneyAvailable.Text = "Money Available: 100";
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Location = new System.Drawing.Point(664, 549);
+            this.trackBar1.Maximum = 15;
+            this.trackBar1.Minimum = 1;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(129, 45);
+            this.trackBar1.TabIndex = 3;
+            this.trackBar1.Value = 5;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // labelCurrentInterval
+            // 
+            this.labelCurrentInterval.AutoSize = true;
+            this.labelCurrentInterval.Location = new System.Drawing.Point(678, 519);
+            this.labelCurrentInterval.Name = "labelCurrentInterval";
+            this.labelCurrentInterval.Size = new System.Drawing.Size(103, 13);
+            this.labelCurrentInterval.TabIndex = 4;
+            this.labelCurrentInterval.Text = "Current Interval: 100";
+            // 
+            // buttonRestart
+            // 
+            this.buttonRestart.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonRestart.Font = new System.Drawing.Font("Ink Free", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonRestart.ForeColor = System.Drawing.SystemColors.Control;
+            this.buttonRestart.Location = new System.Drawing.Point(627, 271);
+            this.buttonRestart.Name = "buttonRestart";
+            this.buttonRestart.Size = new System.Drawing.Size(204, 82);
+            this.buttonRestart.TabIndex = 5;
+            this.buttonRestart.Text = "RESTART";
+            this.buttonRestart.UseVisualStyleBackColor = false;
+            this.buttonRestart.Click += new System.EventHandler(this.buttonRestart_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(847, 627);
+            this.Controls.Add(this.buttonRestart);
+            this.Controls.Add(this.labelCurrentInterval);
+            this.Controls.Add(this.trackBar1);
+            this.Controls.Add(this.labelMoneyAvailable);
+            this.Controls.Add(this.labelTimeSpent);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -272,6 +336,11 @@ namespace WindowsApplication1
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label labelTimeSpent;
+        private System.Windows.Forms.Label labelMoneyAvailable;
+        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.Label labelCurrentInterval;
+        private System.Windows.Forms.Button buttonRestart;
     }
 }
 
